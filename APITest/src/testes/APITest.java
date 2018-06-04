@@ -1,8 +1,6 @@
 package testes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
@@ -14,7 +12,7 @@ import atg.Vertice;
 
 public class APITest {
 	
-	private static Graph grafo1;
+	private static Graph grafo;
 	private static Graph grafo2;
 	private static Graph grafo3;
 	private static Graph grafo4;
@@ -31,19 +29,131 @@ public class APITest {
 	private Graph grafoComPeso;
 	private Graph grafoPesoNegativo;
 	
-
+	
 	@Test
-	public void test() {
+	public void testReadGRaph() {
 		try {
-			grafo1 = GraphControl.readGraph("teste1.txt");
-			grafo2 = GraphControl.readWeightedGraph("teste2.txt");
-			grafo3 = GraphControl.readGraph("teste3.txt");
-			grafo4 = GraphControl.readWeightedGraph("teste4.txt");
+			grafoTeste1 = GraphControl.readGraph("graph1.txt");
+			assertEquals(2,grafoTeste1.getVertexNumber());
+			assertEquals(2,grafoTeste1.getEdgeNumber());
+			assertEquals(2, grafoTeste1.getArestas().size());
+			assertEquals(2, grafoTeste1.getVerticesGraph().size());
+			
+			assertEquals(1, grafoTeste1.getArestas().get(0).getV1().getValor());
+			assertEquals(2, grafoTeste1.getArestas().get(0).getV2().getValor());
+			assertEquals(null,grafoTeste1.getArestas().get(0).getPeso());
+			
+			assertEquals(3, grafoTeste1.getArestas().get(1).getV1().getValor());
+			assertEquals(4, grafoTeste1.getArestas().get(1).getV2().getValor());
+			assertEquals(null,grafoTeste1.getArestas().get(1).getPeso());
+			
+			
+			grafoTeste2 = GraphControl.readGraph("graph6.txt");
+			assertEquals(6,grafoTeste2.getVertexNumber());
+			assertEquals(6,grafoTeste2.getEdgeNumber());
+			assertEquals(6, grafoTeste2.getArestas().size());
+			assertEquals(6, grafoTeste2.getVerticesGraph().size());
+			
+			assertEquals(1, grafoTeste2.getArestas().get(0).getV1().getValor());
+			assertEquals(2, grafoTeste2.getArestas().get(0).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(0).getPeso());
+			
+			assertEquals(2, grafoTeste2.getArestas().get(1).getV1().getValor());
+			assertEquals(3, grafoTeste2.getArestas().get(1).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(1).getPeso());
+			
+			assertEquals(3, grafoTeste2.getArestas().get(2).getV1().getValor());
+			assertEquals(4, grafoTeste2.getArestas().get(2).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(2).getPeso());
+			
+			assertEquals(4, grafoTeste2.getArestas().get(3).getV1().getValor());
+			assertEquals(5, grafoTeste2.getArestas().get(3).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(3).getPeso());
+			
+			assertEquals(5, grafoTeste2.getArestas().get(4).getV1().getValor());
+			assertEquals(6, grafoTeste2.getArestas().get(4).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(4).getPeso());
+			
+			assertEquals(6, grafoTeste2.getArestas().get(5).getV1().getValor());
+			assertEquals(7, grafoTeste2.getArestas().get(5).getV2().getValor());
+			assertEquals(null,grafoTeste2.getArestas().get(5).getPeso());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	@Test
+	public void readWeightedGraph() {
+		try {
+			grafoTeste1 = GraphControl.readWeightedGraph("graph2.txt");
+			assertEquals(2,grafoTeste1.getVertexNumber());
+			assertEquals(2,grafoTeste1.getEdgeNumber());
+			assertEquals(2, grafoTeste1.getArestas().size());
+			assertEquals(2, grafoTeste1.getVerticesGraph().size());
+			
+			assertEquals(1, grafoTeste1.getArestas().get(0).getV1().getValor());
+			assertEquals(3, grafoTeste1.getArestas().get(0).getV2().getValor());
+			assertEquals(-0.3,grafoTeste1.getArestas().get(0).getPeso(),0);
+			
+			assertEquals(3, grafoTeste1.getArestas().get(1).getV1().getValor());
+			assertEquals(4, grafoTeste1.getArestas().get(1).getV2().getValor());
+			assertEquals(-2,grafoTeste1.getArestas().get(1).getPeso(), 0);
+			
+			grafoTeste2 = GraphControl.readWeightedGraph("graph5.txt");
+			assertEquals(20,grafoTeste2.getVertexNumber());
+			assertEquals(20,grafoTeste2.getEdgeNumber());
+			assertEquals(20, grafoTeste2.getArestas().size());		
+			
+			assertEquals("[(vertices=[1, 2], peso = -1.2), "
+					+ "(vertices=[3, 5], peso = -2.1), (vertices=[4, 3], peso = -0.1), "
+					+ "(vertices=[3, 13], peso = -2.2), (vertices=[5, 18], peso = -0.3), "
+					+ "(vertices=[18, 15], peso = -1.1), (vertices=[13, 10], peso = -8.1), "
+					+ "(vertices=[18, 19], peso = -1.0), (vertices=[19, 20], peso = -0.2), "
+					+ "(vertices=[20, 2], peso = -7.0), (vertices=[15, 17], peso = -6.1), "
+					+ "(vertices=[4, 6], peso = -0.7), (vertices=[6, 7], peso = -0.1), "
+					+ "(vertices=[7, 8], peso = -2.0), (vertices=[8, 9], peso = -3.3), "
+					+ "(vertices=[9, 10], peso = -1.7), (vertices=[10, 13], peso = -2.3), "
+					+ "(vertices=[17, 11], peso = -5.0), (vertices=[11, 20], peso = -2.1), "
+					+ "(vertices=[20, 12], peso = -2.2)]", grafoTeste2.getArestas().toString());
+			
+			assertEquals(20, grafoTeste2.getVerticesGraph().size());	
 		} catch (Exception e) {
 			e.printStackTrace();
-//			fail();
 		}
 	}
+	
+	@Test
+	public void testReadGRaphUmVertice() {
+		try {
+			grafo = GraphControl.readGraph("grafoUmVertice.txt");
+			assertEquals(1, grafo.getVerticesGraph().size());
+			assertEquals(0,grafo.getEdgeNumber());
+			assertEquals(0,grafo.getArestas().size());
+			assertEquals(1, grafo.getVertexNumber());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testReadGRaphVazio() {
+		try {
+			grafo = GraphControl.readGraph("grafoVazio.txt");
+			assertEquals(0, grafo.getVertexNumber());
+			assertEquals(0, grafo.getVerticesGraph().size());
+			assertEquals(0,grafo.getEdgeNumber());
+			assertEquals(0,grafo.getArestas().size());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 	@Test
 	public void BFSTest() throws Exception {
