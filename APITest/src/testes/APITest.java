@@ -1,9 +1,10 @@
-package atg;
+//package atg;
 
 import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import atg.Graph;
@@ -37,7 +38,7 @@ public class APITest {
 			assertEquals(2,grafoTeste1.getVertexNumber());
 			assertEquals(2,grafoTeste1.getEdgeNumber());
 			assertEquals(2, grafoTeste1.getArestas().size());
-			assertEquals(2, grafoTeste1.getVerticesGraph().size());
+			assertEquals(2, grafoTeste1.getVerticesGraph().length);
 			
 			assertEquals(1, grafoTeste1.getArestas().get(0).getV1().getValor());
 			assertEquals(2, grafoTeste1.getArestas().get(0).getV2().getValor());
@@ -52,7 +53,7 @@ public class APITest {
 			assertEquals(6,grafoTeste2.getVertexNumber());
 			assertEquals(6,grafoTeste2.getEdgeNumber());
 			assertEquals(6, grafoTeste2.getArestas().size());
-			assertEquals(6, grafoTeste2.getVerticesGraph().size());
+			assertEquals(6, grafoTeste2.getVerticesGraph().length);
 			
 			assertEquals(1, grafoTeste2.getArestas().get(0).getV1().getValor());
 			assertEquals(2, grafoTeste2.getArestas().get(0).getV2().getValor());
@@ -92,7 +93,7 @@ public class APITest {
 			assertEquals(2,grafoTeste1.getVertexNumber());
 			assertEquals(2,grafoTeste1.getEdgeNumber());
 			assertEquals(2, grafoTeste1.getArestas().size());
-			assertEquals(2, grafoTeste1.getVerticesGraph().size());
+			assertEquals(2, grafoTeste1.getVerticesGraph().length);
 			
 			assertEquals(1, grafoTeste1.getArestas().get(0).getV1().getValor());
 			assertEquals(3, grafoTeste1.getArestas().get(0).getV2().getValor());
@@ -119,7 +120,7 @@ public class APITest {
 					+ "(vertices=[17, 11], peso = -5.0), (vertices=[11, 20], peso = -2.1), "
 					+ "(vertices=[20, 12], peso = -2.2)]", grafoTeste2.getArestas().toString());
 			
-			assertEquals(20, grafoTeste2.getVerticesGraph().size());	
+			assertEquals(20, grafoTeste2.getVerticesGraph().length);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,7 +130,7 @@ public class APITest {
 	public void testReadGRaphUmVertice() {
 		try {
 			grafo = GraphControl.readGraph("grafoUmVertice.txt");
-			assertEquals(1, grafo.getVerticesGraph().size());
+			assertEquals(1, grafo.getVerticesGraph().length);
 			assertEquals(0,grafo.getEdgeNumber());
 			assertEquals(0,grafo.getArestas().size());
 			assertEquals(1, grafo.getVertexNumber());
@@ -144,7 +145,7 @@ public class APITest {
 		try {
 			grafo = GraphControl.readGraph("grafoVazio.txt");
 			assertEquals(0, grafo.getVertexNumber());
-			assertEquals(0, grafo.getVerticesGraph().size());
+			assertEquals(0, grafo.getVerticesGraph().length);
 			assertEquals(0,grafo.getEdgeNumber());
 			assertEquals(0,grafo.getArestas().size());
 		} catch (IOException e) {
@@ -319,7 +320,6 @@ public class APITest {
 		
 		
 	}
-	
 	
 	@Test
 	public void testGraphRepresentationAM() {
@@ -506,6 +506,14 @@ public class APITest {
 		assertEquals(list4, adjList4);
 	}
 
+	@Test
+	public void testShortestPath() {
+		String caminho;
+		Graph graphComPeso = GraphControl.readGraph("graph8.txt");
+		caminho = GraphControl.shortestPath(graphComPeso, 1, 5); //nao eh possivel associar o grafo a execucao do menor caminho
+		caminho = GraphControl.shortestPath(1, 5); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
+		Assert.assertEquals("1 2 3 5", caminho);
+	}
 }
 	
 
