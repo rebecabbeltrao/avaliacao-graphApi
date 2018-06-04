@@ -1,4 +1,4 @@
-package testes;
+package atg;
 
 import static org.junit.Assert.*;
 
@@ -277,6 +277,235 @@ public class APITest {
 		assertEquals(1.6, GraphControl.getEdgeNumber(grafoTeste7));
 		
 	}
+	public void testGraphRepresentationAL() {
+		try {
+			grafo = GraphControl.readGraph("teste1.txt");
+			grafo3 = GraphControl.readGraph("teste3.txt");
+			grafoTeste6 = GraphControl.readGraph("graph6.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String adjList, adjMatrix;
+		String list = "\n";
+		list += "1 - 2 5" + "\n";
+		list += "2 - 1 5" + "\n";
+		list += "3 - 5" + "\n";
+		list += "4 - 5" + "\n";
+		list += "5 - 1 2 3 4";
+		adjList = GraphControl.graphRepresentation(grafo, Graph.Tipo.AL);
+		assertEquals(list, adjList);
+		
+		
+		String list2 = "\n";
+		list2 += "1 - 2 5" + "\n";
+		list2 += "2 - 3" + "\n";
+		list2 += "3 - " + "\n";
+		list2 += "4 - 3" + "\n";
+		list2 += "5 - 2 4" + "\n";
+		adjList = GraphControl.graphRepresentation(grafo3, Graph.Tipo.AL);
+		assertEquals(list2, adjList);
+		
+		String list3 = "\n";
+		list3 += "1 - 2" + "\n";
+		list3 += "2 - 3" + "\n";
+		list3 += "3 - 4" + "\n";
+		list3 += "4 - 5" + "\n";
+		list3 += "5 - 6" + "\n";
+		list3 += "6 - 7" + "\n";
+		list3 += "7 - " + "\n";
+		String adjList3 = GraphControl.graphRepresentation(grafoTeste6, Graph.Tipo.AL);
+		assertEquals(list3, adjList3);
+		
+		
+	}
 	
+	
+	@Test
+	public void testGraphRepresentationAM() {
+		try {
+			grafo = GraphControl.readGraph("teste1.txt");
+			grafo3 = GraphControl.readGraph("teste3.txt");
+			grafoTeste6 = GraphControl.readGraph("graph6.txt");	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String matrix = "";
+		matrix += "  1 2 3 4 5" + "\n";
+		matrix += "1 0 1 0 0 1" + "\n";
+		matrix += "2 1 0 0 0 1" + "\n";
+		matrix += "3 0 0 0 0 1" + "\n";
+		matrix += "4 0 0 0 0 1" + "\n";
+		matrix += "5 1 1 1 1 0";
+		
+		String adjMatrix = GraphControl.graphRepresentation(grafo, Graph.Tipo.AM);
+		assertEquals(matrix, adjMatrix);
+		String matrix2 = "";
+		matrix2 += "  1 2 3 4 5" + "\n";
+		matrix2 += "1 0 1 0 0 1" + "\n";
+		matrix2 += "2 0 0 1 0 0" + "\n";
+		matrix2 += "3 0 0 0 0 0" + "\n";
+		matrix2 += "4 0 0 1 0 0" + "\n";
+		matrix2 += "5 0 1 0 1 0" + "\n";
+		
+		String adjMatrix2 = GraphControl.graphRepresentation(grafo3, Graph.Tipo.AM);
+		assertEquals(matrix2,adjMatrix2);
+		
+		String matrix3 = "";
+		matrix3 += "  1 2 3 4 5 6 7" + "\n";
+		matrix3 += "1 0 1 0 0 0 0 0" + "\n";
+		matrix3 += "2 0 0 1 0 0 0 0" + "\n";
+		matrix3 += "3 0 0 0 1 0 0 0" + "\n";
+		matrix3 += "4 0 0 0 0 1 0 0" + "\n";
+		matrix3 += "5 0 0 0 0 0 1 0" + "\n";
+		matrix3 += "6 0 0 0 0 0 0 1" + "\n";
+		matrix3 += "7 0 0 0 0 0 0 0" + "\n";
+		
+		String adjMatrix3 = GraphControl.graphRepresentation(grafoTeste6, Graph.Tipo.AM);
+		assertEquals(matrix3, adjMatrix3);
+ 	}
+	
+	@Test
+	public void testGraphRepresentationAMComPeso() {
+		try {
+			grafo2 = GraphControl.readWeightedGraph("teste2.txt");
+			grafo4 = GraphControl.readWeightedGraph("teste4.txt");
+			grafoTeste5 = GraphControl.readWeightedGraph("graph5.txt");
+			grafoPesoNegativo = GraphControl.readWeightedGraph("pesoNegativo.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String matrix = "";
+		matrix += "  1 2 3 4 5" + "\n";
+		matrix += "1 0 0.1 0 0 1" + "\n";
+		matrix += "2 0.1 0 0 0 0.2" + "\n";
+		matrix += "3 0 0 0 -9.5 5" + "\n";
+		matrix += "4 0 0 -9.5 0 2.3" + "\n";
+		matrix += "5 1 0.2 5 2.3 0";
+		
+		String adjMatrix = GraphControl.graphRepresentation(grafo2, Graph.Tipo.AM);
+		assertEquals(matrix,adjMatrix);
+		
+		String matrix2 = "";
+		matrix2 += "  0 1 2 3 4 5" + "\n";
+		matrix2 += "0 0 0 3.0 5.0 0" + "\n";
+		matrix2 += "1 0 0 0 0 0 0" + "\n";
+		matrix2 += "2 2.0 0 0 0 0" + "\n";
+		matrix2 += "3 0 0 0 0 0 0" + "\n";
+		matrix2 += "4 0 0 0 0 0 7.0"+ "\n";
+		matrix2 += "5 0 0 0 0 0 0" + "\n";
+		
+		String adjMatrix2 = GraphControl.graphRepresentation(grafo4, Graph.Tipo.AM);
+		assertEquals(matrix2, adjMatrix2);
+		
+		String matrix3 = "";
+		matrix3 += " 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20" + "\n";
+		matrix3 += "1 -1.2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "3 0 0 0 0 -2.1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "4 0 0 -0.1 0 0 -0.7 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 0 0" + "\n";
+		matrix3 += "6 0 0 0 0 0 0 -0.1 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "7 0 0 0 0 0 0 0 -2 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "8 0 0 0 0 0 0 0 0 -3.3 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "9 0 0 0 0 0 0 0 0 0 -1.7 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "10 0 0 0 0 0 0 0 0 0 0 0 0 -2.3 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "12 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "13 0 0 -2.2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "17 0 0 0 0 0 0 0 0 0 0 -5 0 0 0 0 0 0 0 0" + "\n";
+		matrix3 += "18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.0 0" + "\n";
+		matrix3 += "19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.2" + "\n";
+		matrix3 += "20 0 -7 0 0 0 0 0 0 0 0 0 -2.2 0 0 0 0 0 0 0 0" + "\n";
+		String adjMatrix3 = GraphControl.graphRepresentation(grafoTeste5, Graph.Tipo.AM);
+		assertEquals(matrix3, adjMatrix3);
+		
+		String matrix4 = "";
+		matrix4 += "  1 2 3 4 5" + "\n";
+		matrix4 += "1 0 0.1 0 0 1" + "\n";
+		matrix4 += "2 0 0 0 0 0.2" + "\n";
+		matrix4 += "3 0 0 0 -9.5 0" + "\n";
+		matrix4 += "4 0 0 0 0 2.3" + "\n";
+		matrix4 += "5 0 0 5 0 0" + "\n";
+		
+		String adjMatrix4 = GraphControl.graphRepresentation(grafoPesoNegativo, Graph.Tipo.AM);
+		assertEquals(matrix4, adjMatrix4);
+ 		
+	}
+	@Test
+	public void testGraphRepresentatioALComPesos() {
+		try {
+			grafo2 = GraphControl.readWeightedGraph("teste2.txt");
+			grafo4 = GraphControl.readWeightedGraph("teste4.txt");
+			grafoTeste5 = GraphControl.readWeightedGraph("graph5.txt");
+			grafoPesoNegativo = GraphControl.readWeightedGraph("pesoNegativo.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String adjList, adjMatrix;
+		
+		String list = "\n";
+		list += "1 - 2(0.1) 5(1)" + "\n";
+		list += "2 - 1(0.1) 5(0.2)" + "\n";
+		list += "3 - 4(-9.5) 5(5)" + "\n";
+		list += "4 - 3(-9.5) 5(2.3)" + "\n";
+		list += "5 - 1(1) 2(0.2) 3(5) 4(2.3)";
+		adjList = GraphControl.graphRepresentation(grafo2, Graph.Tipo.AL);
+		assertEquals(list, adjList);
+		
+		String list2 = "\n";
+		list2 += "0 - 2(3.0) 3(5.0)" + "\n";
+		list2 += "1 - " + "\n";
+		list2 += "2 - 1(2.0) 3" + "\n";
+		list2 += "3 - " + "\n";
+		list2 += "4 - 5(7.0)" + "\n";
+		list2 += "5 - " + "\n";
+		adjList = GraphControl.graphRepresentation(grafo4, Graph.Tipo.AL);
+		
+		String list3 = "\n";
+		list3 += "1 - 1(-1.2)" + "\n";
+		list3 += "2 - " + "\n";
+		list3 += "3 - 5(-2.1)" + "\n";
+		list3 += "4 - 3(-0.1) 6(-0.7)" + "\n";
+		list3 += "5 - 18(-1.1)" + "\n";
+		list3 += "6 - 7(-0.1)" + "\n";
+		list3 += "7 - 8(-2)" + "\n";
+		list3 += "8 - 9(-3.3)" + "\n";
+		list3 += "9 - 10(-1.7)" + "\n";
+		list3 += "10 - 13(-2.3)" + "\n";
+		list3 += "11 - " + "\n";
+		list3 += "12 - " + "\n";
+		list3 += "13 - 3(-2.2)" + "\n";
+		list3 += "14 - " + "\n";
+		list3 += "15 - " + "\n";
+		list3 += "16 - " + "\n";
+		list3 += "17 - 10(-5)" + "\n";
+		list3 += "18 - 19(-1.0)" + "\n";
+		list3 += "19 - 20(-0.2)" + "\n";
+		list3 += "20 - 2(-7) 12(-2.2)" + "\n";
+		
+		String adjList3 = GraphControl.graphRepresentation(grafoTeste5, Graph.Tipo.AL);
+		assertEquals(list3, adjList3);
+		
+		String list4 = "\n";
+		list4 += "1 - 2(0.1) 5(1)" + "\n";
+		list4 += "2 - 5(0.2)" + "\n";
+		list4 += "3 - 4(-9.5)" + "\n";
+		list4 += "4 - 5(2.3)" + "\n";
+		list4 += "5 - 3(5)" + "\n";
+	
+		String adjList4 = GraphControl.graphRepresentation(grafoPesoNegativo, Graph.Tipo.AL);
+		assertEquals(list4, adjList4);
+	}
 
 }
+	
+
