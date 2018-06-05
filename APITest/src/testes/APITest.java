@@ -510,8 +510,10 @@ public class APITest {
 	public void testShortestPath() throws Exception {
 		String caminho;
 		Graph graphComPeso = GraphControl.readGraph("graph8.txt");
-		caminho = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //nao eh possivel associar o grafo a execucao do menor caminho
-		caminho = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
+		Vertice v1 = new Vertice(1);
+		Vertice v2 = new Vertice(5);
+		//caminho = GraphControl.shortestPath(graphComPeso, v1, v2); //nao eh possivel associar o grafo a execucao do menor caminho
+		caminho = GraphControl.shortestPath(v1, v2); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
 		Assert.assertEquals("1 2 3 5", caminho);
 	}
 	
