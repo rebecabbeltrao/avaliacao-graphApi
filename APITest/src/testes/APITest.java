@@ -1,4 +1,4 @@
-//package atg;
+package testes;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +32,7 @@ public class APITest {
 	
 	
 	@Test
-	public void testReadGRaph() {
+	public void testReadGRaph() throws Exception {
 		try {
 			grafoTeste1 = GraphControl.readGraph("graph1.txt");
 			assertEquals(2,grafoTeste1.getVertexNumber());
@@ -127,7 +127,7 @@ public class APITest {
 	}
 	
 	@Test
-	public void testReadGRaphUmVertice() {
+	public void testReadGRaphUmVertice() throws Exception {
 		try {
 			grafo = GraphControl.readGraph("grafoUmVertice.txt");
 			assertEquals(1, grafo.getVerticesGraph().length);
@@ -141,7 +141,7 @@ public class APITest {
 	}
 	
 	@Test
-	public void testReadGRaphVazio() {
+	public void testReadGRaphVazio() throws Exception {
 		try {
 			grafo = GraphControl.readGraph("grafoVazio.txt");
 			assertEquals(0, grafo.getVertexNumber());
@@ -269,16 +269,16 @@ public class APITest {
 		grafoTeste6 = GraphControl.readGraph("graph6.txt");
 		
 
-		assertEquals(1, GraphControl.getEdgeNumber(grafoTeste1));
-		assertEquals(1.3, GraphControl.getEdgeNumber(grafoTeste2));
-		assertEquals(1.5, GraphControl.getEdgeNumber(grafoTeste3));
-		assertEquals(2, GraphControl.getEdgeNumber(grafoTeste4));
-		assertEquals(2.23, GraphControl.getEdgeNumber(grafoTeste5));
-		assertEquals(1.7, GraphControl.getEdgeNumber(grafoTeste6));
-		assertEquals(1.6, GraphControl.getEdgeNumber(grafoTeste7));
+		assertEquals(1, GraphControl.getMeanEdge(grafoTeste1));
+		assertEquals(1.3, GraphControl.getMeanEdge(grafoTeste2));
+		assertEquals(1.5, GraphControl.getMeanEdge(grafoTeste3));
+		assertEquals(2, GraphControl.getMeanEdge(grafoTeste4));
+		assertEquals(2.23, GraphControl.getMeanEdge(grafoTeste5));
+		assertEquals(1.7, GraphControl.getMeanEdge(grafoTeste6));
+		assertEquals(1.6, GraphControl.getMeanEdge(grafoTeste7));
 		
 	}
-	public void testGraphRepresentationAL() {
+	public void testGraphRepresentationAL() throws Exception {
 		try {
 			grafo = GraphControl.readGraph("teste1.txt");
 			grafo3 = GraphControl.readGraph("teste3.txt");
@@ -322,7 +322,7 @@ public class APITest {
 	}
 	
 	@Test
-	public void testGraphRepresentationAM() {
+	public void testGraphRepresentationAM() throws Exception {
 		try {
 			grafo = GraphControl.readGraph("teste1.txt");
 			grafo3 = GraphControl.readGraph("teste3.txt");
@@ -368,7 +368,7 @@ public class APITest {
  	}
 	
 	@Test
-	public void testGraphRepresentationAMComPeso() {
+	public void testGraphRepresentationAMComPeso() throws Exception {
 		try {
 			grafo2 = GraphControl.readWeightedGraph("teste2.txt");
 			grafo4 = GraphControl.readWeightedGraph("teste4.txt");
@@ -440,7 +440,7 @@ public class APITest {
  		
 	}
 	@Test
-	public void testGraphRepresentatioALComPesos() {
+	public void testGraphRepresentatioALComPesos() throws Exception {
 		try {
 			grafo2 = GraphControl.readWeightedGraph("teste2.txt");
 			grafo4 = GraphControl.readWeightedGraph("teste4.txt");
@@ -488,7 +488,7 @@ public class APITest {
 		list3 += "15 - " + "\n";
 		list3 += "16 - " + "\n";
 		list3 += "17 - 10(-5)" + "\n";
-		list3 += "18 - 19(-1.0)" + "\n";
+		list3 += "18 - 19( -1.0)" + "\n";
 		list3 += "19 - 20(-0.2)" + "\n";
 		list3 += "20 - 2(-7) 12(-2.2)" + "\n";
 		
@@ -507,12 +507,33 @@ public class APITest {
 	}
 
 	@Test
-	public void testShortestPath() {
+	public void testShortestPath() throws Exception {
 		String caminho;
 		Graph graphComPeso = GraphControl.readGraph("graph8.txt");
-		caminho = GraphControl.shortestPath(graphComPeso, 1, 5); //nao eh possivel associar o grafo a execucao do menor caminho
-		caminho = GraphControl.shortestPath(1, 5); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
+		caminho = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //nao eh possivel associar o grafo a execucao do menor caminho
+		caminho = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
 		Assert.assertEquals("1 2 3 5", caminho);
+	}
+	
+	@Test
+	public void testDFS() throws Exception {
+		try {
+			grafoVazio = GraphControl.readWeightedGraph("grafoVazio.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Assert.assertNull(GraphControl.DFS(grafoVazio, new Vertice(0)));
+	}
+	
+	@Test
+	public void testMST() throws Exception {
+		try {
+			grafoVazio = GraphControl.readWeightedGraph("grafoVazio.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Assert.assertNull(GraphControl.mst(grafoVazio));
+		
 	}
 }
 	
