@@ -324,6 +324,7 @@ public class APITest {
 	@Test
 	public void testGraphRepresentationAM() throws Exception {
 		try {
+			grafoUmVertice = GraphControl.readGraph("grafoUmVertice.txt");
 			grafo = GraphControl.readGraph("teste1.txt");
 			grafo3 = GraphControl.readGraph("teste3.txt");
 			grafoTeste6 = GraphControl.readGraph("graph6.txt");	
@@ -332,6 +333,12 @@ public class APITest {
 			e.printStackTrace();
 		}
 
+		String adjMatrix1Vertex = GraphControl.graphRepresentation(grafoUmVertice, Graph.Tipo.AM);
+		String matrix0 = "";
+		matrix0 += "  1" + "\n";
+		matrix0 += "1 1" + "\n";
+		
+		
 		String matrix = "";
 		matrix += "  1 2 3 4 5" + "\n";
 		matrix += "1 0 1 0 0 1" + "\n";
@@ -341,7 +348,6 @@ public class APITest {
 		matrix += "5 1 1 1 1 0";
 		
 		String adjMatrix = GraphControl.graphRepresentation(grafo, Graph.Tipo.AM);
-		assertEquals(matrix, adjMatrix);
 		String matrix2 = "";
 		matrix2 += "  1 2 3 4 5" + "\n";
 		matrix2 += "1 0 1 0 0 1" + "\n";
@@ -351,7 +357,6 @@ public class APITest {
 		matrix2 += "5 0 1 0 1 0" + "\n";
 		
 		String adjMatrix2 = GraphControl.graphRepresentation(grafo3, Graph.Tipo.AM);
-		assertEquals(matrix2,adjMatrix2);
 		
 		String matrix3 = "";
 		matrix3 += "  1 2 3 4 5 6 7" + "\n";
@@ -364,6 +369,10 @@ public class APITest {
 		matrix3 += "7 0 0 0 0 0 0 0" + "\n";
 		
 		String adjMatrix3 = GraphControl.graphRepresentation(grafoTeste6, Graph.Tipo.AM);
+		
+		assertEquals(matrix0, adjMatrix1Vertex);
+		assertEquals(matrix, adjMatrix);
+		assertEquals(matrix2,adjMatrix2);
 		assertEquals(matrix3, adjMatrix3);
  	}
 	
@@ -508,15 +517,23 @@ public class APITest {
 
 	@Test
 	public void testShortestPath() throws Exception {
-		String caminho1;
-		Graph graphComPeso = GraphControl.readGraph("graph8.txt");
-		caminho1 = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //nao eh possivel associar o grafo a execucao do menor caminho
+		Vertice v = new Vertice(5);
+		String caminho3 = GraphControl.shortestPath(v, v);
+		
+		grafoComPeso = GraphControl.readGraph("GrafoMedio.txt");
+		String caminho1 = GraphControl.shortestPath( new Vertice(1), new Vertice(5)); //nao eh possivel associar o grafo a execucao do menor caminho
+		
 		String caminho2 = GraphControl.shortestPath( new Vertice(5), new Vertice(5)); //recebe como parametros somente objetos do tipo Vertice, mas nao permite que a criacao desses objetos
+		
+		grafoVazio = GraphControl.readWeightedGraph("grafoVazio.txt");
+		
+		Vertice v1 = grafoComPeso.getVerticesGraph().get(1);
+		
+		Assert.assertEquals(" ",  GraphControl.shortestPath( v1, new Vertice(5)));
+		Assert.assertEquals(" ", caminho3);
 		Assert.assertEquals("1 2 3 5", caminho1);
 		Assert.assertEquals("5", caminho2);
-		grafoVazio = GraphControl.readWeightedGraph("grafoVazio.txt");
-		Assert.assertEquals(" ",  GraphControl.shortestPath( new Vertice(5), new Vertice(5)));
-
+		
 	}
 	
 	@Test
